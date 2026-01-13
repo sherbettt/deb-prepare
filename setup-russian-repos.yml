@@ -1,0 +1,32 @@
+---
+- name: Настройка российских зеркал для Debian
+  hosts: localhost
+  connection: local
+  become: yes
+  vars:
+    debian_codename: "trixie"  # или оставить автоматическое определение
+
+  tasks:
+    - name: Определить кодовое имя релиза (автоматически)
+      set_fact:
+        debian_codename: "{{ ansible_distribution_release }}"
+      when: debian_codename is not defined
+
+    - name: Проверить текущие репозитории
+      shell: |
+        echo "=== Текущие репозитории ==="
+        find /etc/apt/sources.list.d -name "*.sources" -o -name "*.list" | sort | while read f; do
+          echo "Файл: $f"
+          grep -E "^(Types:|URIs:|Suites:|Components:|deb )" "$f" 2>/dev/null || true
+          echo "---"
+        done
+      register: current_repos
+      changed_when: false
+
+    - name: Показать информацию о репозиториях
+      debug:
+        msg: "Кодовое имя: {{ debian_codename }}"
+    
+    - debug:
+        msg: "{{ current_repos.stdout_lines }}"
+
