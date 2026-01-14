@@ -32,6 +32,8 @@
         state: present
       loop: 
           - sudo
+          - axel
+          - aria2
           - rsync
           - iptables
           - netfilter-persistent
