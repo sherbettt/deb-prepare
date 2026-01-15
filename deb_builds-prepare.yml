@@ -60,6 +60,7 @@
           - smartmontools
           - nvme-cli
           - hdparm
+          - sysbench
       ignore_errors: yes
 
     - name: установка утилит для deb сборок
