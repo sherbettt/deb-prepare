@@ -44,6 +44,7 @@
           - traceroute
           - highlight
           - ccze
+          - inxi
           - sysstat
           - strace
           - htop
