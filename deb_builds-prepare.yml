@@ -57,6 +57,9 @@
           - dnsutils
           - gnupg2
           - rsyslog
+          - smartmontools
+          - nvme-cli
+          - hdparm
       ignore_errors: yes
 
     - name: установка утилит для deb сборок
