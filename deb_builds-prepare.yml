@@ -32,6 +32,8 @@
         state: present
       loop: 
           - sudo
+          - curl
+          - wget
           - axel
           - aria2
           - rsync
@@ -63,6 +65,55 @@
           - sysbench
       ignore_errors: yes
 
+    - name: установка утилит анализа
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop: 
+          - tcpdump      # анализ сетевого трафика
+          - tshark       # Wireshark в CLI
+          - iproute2     # современные сетевые утилиты (ip, ss и т.д.)
+          - ethtool      # диагностика сетевых интерфейсов
+          - iperf3       # тестирование пропускной способности
+          - ngrep        # grep для сетевого трафика
+          - stress-ng    # нагрузочное тестирование
+          - perf-tools-unstable  # инструменты профилирования
+          - valgrind     # отладка памяти
+          - gdb          # отладчик
+      ignore_errors: yes
+      
+    - name: установка утилит мониторинга и системного администрирования
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop: 
+          - lm-sensors   # мониторинг температуры
+          - iotop        # мониторинг дисковых операций
+          - iftop        # мониторинг сетевого трафика
+          - nethogs      # мониторинг трафика по процессам
+          - powertop     # мониторинг энергопотребления
+          - glances      # расширенный мониторинг системы
+          - dstat        # сбор статистики
+          - procps       # дополнительные утилиты для работы с процессами
+          - lsb-release  # информация о дистрибутиве
+      ignore_errors: yes
+      
+    - name: установка утилит для работы с файлами и архивами
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop: 
+          - pv           # progress viewer (прогресс для pipe)
+          - mc           # Midnight Commander
+          - rar          # для распаковки .rar архивов
+          - unrar        # альтернатива rar
+          - p7zip-full   # поддержка всех форматов 7z
+          - arj          # для старых архивов
+          - lzma         # компрессия LZMA
+          - zstd         # современный компрессор
+          - pigz         # многопоточный gzip
+      ignore_errors: yes
+
     - name: установка утилит для deb сборок
       apt:
         name: "{{ item }}"
@@ -76,8 +127,14 @@
           - fakeroot
           - lintian
           - pbuilder
-          - curl
-          - wget
+          - quilt       # для управления патчами в debian/patches
+          - dpkg-dev    # дополнительные инструменты для работы с пакетами
+          - debian-archive-keyring  # ключи для репозиториев
+          - debootstrap  # для создания chroot-окружений
+          - cowbuilder   # альтернатива pbuilder
+          - distro-info  # информация о дистрибутивах
+          - equivs       # создание фиктивных пакетов
+          - apt-utils    # дополнительные утилиты apt
       ignore_errors: yes
 
     - name: установка утилит для python сборок
@@ -92,6 +149,27 @@
           - dh-python
           - python3-dev
           - python3-venv
+          - python3-virtualenv
+          - python3-pytest
+          - python3-tox
+          - python3-coverage
+          - python3-black  # форматирование кода
+          - python3-flake8 # линтинг
+          - python3-mypy   # проверка типов
+          - python3-pipx   # изолированная установка Python-утилит
+      ignore_errors: yes
+
+    - name: установка утилит для сборки специфических пакетов
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop: 
+          - cmake          # для проектов на CMake
+          - automake       # для autotools
+          - autoconf       # для autotools
+          - libtool        # для библиотек
+          - checkinstall   # создание пакетов из make install
+          - sbuild         # ещё один инструмент сборки
       ignore_errors: yes
 
     - name: установка утилит для node.js сборок
@@ -103,16 +181,18 @@
           - npm
       ignore_errors: yes
 
+    - name: Очистка кеша apt
+      apt:
+        autoclean: yes
+        autoremove: yes
+
+
 #    - name: запуск службы rsyslog
 #      systemd:
 #        name: rsyslog
 #        enabled: yes
 #        state: started
 
-
-    - name: Инфо!
-      debug:
-        msg: "Утилиты настроены."
 
 
 # ansible-playbook -i "localhost," -c local deb_builds-prepare.yml
