@@ -69,7 +69,7 @@
       tags:
         - standard
         - tools
-        - all
+        
 
     - name: установка утилит анализа
       apt:
@@ -91,7 +91,7 @@
         - analysis
         - debug-tools
         - dev
-        - all
+        
 
     - name: установка утилит мониторинга
       apt:
@@ -111,7 +111,7 @@
       tags:
         - monitoring
         - sysadmin
-        - all
+        
 
     - name: установка утилит для работы с файлами
       apt:
@@ -131,7 +131,7 @@
       tags:
         - files
         - archives
-        - all
+        
 
     - name: установка утилит для deb сборок
       apt:
@@ -159,7 +159,7 @@
         - deb-build
         - packaging
         - dev
-        - all
+        
 
     - name: установка утилит для python сборок
       apt:
@@ -186,7 +186,7 @@
         - python
         - python-dev
         - dev
-        - all
+        
 
     - name: установка утилит для сборки специфических пакетов
       apt:
@@ -204,7 +204,7 @@
         - build-tools
         - compilation
         - dev
-        - all
+        
 
     - name: установка утилит для node.js сборок
       apt:
@@ -218,7 +218,7 @@
         - nodejs
         - javascript
         - dev
-        - all
+        
 
     - name: Очистка кеша apt
       apt:
