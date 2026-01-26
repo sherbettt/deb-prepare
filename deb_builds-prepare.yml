@@ -691,4 +691,7 @@
         - apt-clean
 
 # ansible-playbook -i "localhost," -c local deb_builds-prepare.yml
-# 
+# ansible-playbook -i "localhost," -c local deb_builds-prepare.yml --tags standard
+# ansible-playbook -i "localhost," -c local deb_builds-prepare.yml --tags standard,monitoring,files
+# ansible-playbook -i "localhost," -c local deb_builds-prepare.yml --skip-tags debug
+# ansible-playbook -i "localhost," -c local deb_builds-prepare.yml --tags apt-update,apt-clean
